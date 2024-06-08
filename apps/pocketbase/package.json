@@ -1,0 +1,7 @@
+{
+  "name": "pocketbase",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "pocketbase serve --dev"
+  }
+}
