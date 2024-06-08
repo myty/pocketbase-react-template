@@ -17,7 +17,7 @@ function createExternalPocketBaseAuthStore(pb: PocketBase) {
         console.error(error);
       }
     },
-    logout: async () => {
+    logout: () => {
       try {
         pb.authStore.clear();
       } catch (error) {
@@ -67,11 +67,16 @@ export function buildAuthStoreHook(pb: PocketBase) {
         });
     };
 
+    const logout = () => {
+      pocketBaseAuth.logout();
+      setStatus("unauthenticated");
+    };
+
     return {
       status,
       authStore,
       login,
-      logout: pocketBaseAuth.logout,
+      logout,
     };
   }
 

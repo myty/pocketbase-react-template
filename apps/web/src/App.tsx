@@ -3,10 +3,11 @@ import { LoginForm } from "./LoginForm";
 import "./App.css";
 
 function App() {
-  const { authStore, login, logout } = useAuthStore();
+  const { authStore, login, logout, status } = useAuthStore();
 
   return (
     <>
+      <h1>{status}</h1>
       {authStore.isValid ? (
         <button onClick={logout}>Logout</button>
       ) : (
