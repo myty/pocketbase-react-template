@@ -9,5 +9,3 @@ RUN unzip /tmp/pb.zip -d /pb/
 ENV PATH="${PATH}:/pb"
 
 RUN pnpm config set store-dir /.pnpm-store
-
-EXPOSE 8090
