@@ -2,6 +2,10 @@
   "name": "pocketbase",
   "version": "0.0.0",
   "scripts": {
-    "dev": "pocketbase serve --dev"
+    "dev": "tsc --watch --outDir ./dist/pb_hooks",
+    "dev:pocketbase": "pocketbase serve --hooksDir=./dist/pb_hooks"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
   }
 }
