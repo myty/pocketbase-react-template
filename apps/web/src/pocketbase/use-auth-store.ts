@@ -12,7 +12,43 @@ function createExternalPocketBaseAuthStore(pb: PocketBase) {
   return {
     login: async (email: string, password: string) => {
       try {
-        await pb.collection("users").authWithPassword(email, password);
+        const { token } = await pb
+          .collection("users")
+          .authWithPassword(email, password);
+
+        authStore = {
+          ...authStore,
+          token,
+        } as BaseAuthStore;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    loginWithProvider: async (provider: "google") => {
+      try {
+        const { meta, token, record } = await pb
+          .collection("users")
+          .authWithOAuth2({ provider });
+
+        if (meta?.avatarUrl && !authStore.model?.avatar) {
+          const formData = new FormData();
+
+          const response = await fetch(meta.avatarUrl);
+
+          if (response.ok) {
+            const file = await response.blob();
+            formData.append("avatar", file);
+          }
+
+          formData.append("name", meta.name);
+
+          await pb.collection("users").update(record.id, formData);
+        }
+
+        authStore = {
+          ...authStore,
+          token,
+        } as BaseAuthStore;
       } catch (error) {
         console.error(error);
       }
@@ -27,11 +63,13 @@ function createExternalPocketBaseAuthStore(pb: PocketBase) {
     subscribe: (listener: () => void) => {
       return pb.authStore.onChange((token, model) => {
         authStore = {
+          ...authStore,
           token,
           model,
           isValid: pb.authStore.isValid,
           isAdmin: pb.authStore.isAdmin,
         } as BaseAuthStore;
+
         listener();
       });
     },
@@ -67,6 +105,19 @@ export function buildAuthStoreHook(pb: PocketBase) {
         });
     };
 
+    const loginWithProvider = (provider: "google") => {
+      setStatus("authenticating");
+
+      pocketBaseAuth
+        .loginWithProvider(provider)
+        .then(() => {
+          setStatus("authenticated");
+        })
+        .catch(() => {
+          setStatus("unauthenticated");
+        });
+    };
+
     const logout = () => {
       pocketBaseAuth.logout();
       setStatus("unauthenticated");
@@ -76,6 +127,7 @@ export function buildAuthStoreHook(pb: PocketBase) {
       status,
       authStore,
       login,
+      loginWithProvider,
       logout,
     };
   }
