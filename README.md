@@ -2,7 +2,7 @@
 
 This is a template for a fullstack application using PocketBase and React.
 It also includes a devcontainer for easy development.
-For the best experience following the instructions in the devcontainer section is recommended.
+For the best experience use the devcontainer.
 
 ## Getting Started
 
