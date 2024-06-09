@@ -40,11 +40,13 @@ export const AppLayout: React.FC<PropsWithChildren> = ({ children }) => {
   const user = {
     name: authStore.model?.name,
     email: authStore.model?.email,
-    imageUrl: pb.files.getUrl(
-      authStore.model as Record<string, unknown>,
-      authStore.model?.avatar,
-      { thumb: "40x40" }
-    ),
+    imageUrl: authStore.model?.avatar
+      ? pb.files.getUrl(
+          authStore.model as Record<string, unknown>,
+          authStore.model.avatar,
+          { thumb: "40x40" }
+        )
+      : undefined,
   };
 
   const handleMenuClick = (key: string) => () => {

@@ -1,9 +1,12 @@
 import { BaseAuthStore } from "pocketbase";
+import { User } from "../models/user";
 
 export type AuthStore = Omit<
   BaseAuthStore,
   "onChange" | "save" | "clear" | "loadFromCookie" | "exportToCookie"
->;
+> & {
+  model: User;
+};
 
 export const AuthProviders = {
   Email: "email",
