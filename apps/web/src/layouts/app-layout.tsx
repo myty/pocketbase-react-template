@@ -38,8 +38,7 @@ export const AppLayout: React.FC<PropsWithChildren> = ({ children }) => {
     useAuthStore();
 
   const user = {
-    name: authStore.model?.name,
-    email: authStore.model?.email,
+    ...authStore.model,
     imageUrl: authStore.model?.avatar
       ? pb.files.getUrl(
           authStore.model as Record<string, unknown>,
