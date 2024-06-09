@@ -8,4 +8,5 @@ RUN unzip /tmp/pb.zip -d /pb/
 
 ENV PATH="${PATH}:/pb"
 
+RUN npm install -g pnpm@9.2.0
 RUN pnpm config set store-dir /.pnpm-store
