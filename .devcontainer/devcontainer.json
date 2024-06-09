@@ -27,7 +27,8 @@
       "extensions": [
         "ms-azuretools.vscode-docker",
         "editorconfig.editorconfig",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "andrewmcodes.tailwindcss-extension-pack"
       ]
     }
   }

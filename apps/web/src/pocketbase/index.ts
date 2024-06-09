@@ -1,8 +1,8 @@
 import PocketBase from "pocketbase";
-import { buildAuthStoreHook } from "./use-auth-store";
+import { authStoreHookFactory } from "./auth-store/hook-factory";
 
 const pb = new PocketBase("/pb");
-const useAuthStore = buildAuthStoreHook(pb);
+const useAuthStore = authStoreHookFactory(pb);
 
 export default pb;
 export { useAuthStore };
